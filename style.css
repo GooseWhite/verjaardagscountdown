@@ -1,0 +1,37 @@
+/* Basis */
+body {
+  font-family: Arial, sans-serif;
+  background: #ffebcc;
+  color: #333;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Kaart */
+.container {
+  background: #ff6f61;
+  padding: 24px;
+  border-radius: 16px;
+  color: #fff;
+  max-width: 480px;
+  width: calc(100% - 32px);
+}
+
+/* Typografie */
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+#countdown {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+#message {
+  font-size: 1.5em;
+  font-weight: bold;
+}
