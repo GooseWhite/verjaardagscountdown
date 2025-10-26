@@ -42,31 +42,55 @@ document.addEventListener("DOMContentLoaded", () => {
 let deferredPrompt = null;
 const installBtn = document.getElementById("installBtn");
 
-// Toon knop wanneer installeren kan
+// Helper: ben je al als app geopend
+const isStandalone =
+  window.matchMedia("(display-mode: standalone)").matches ||
+  window.navigator.standalone === true;
+
+// Toon knop standaard als je niet in standalone zit
+if (installBtn && !isStandalone) {
+  installBtn.style.display = "inline-block";
+}
+
+// Chrome/Edge: onderschep prompt en toon knop
 window.addEventListener("beforeinstallprompt", e => {
   e.preventDefault();
   deferredPrompt = e;
   if (installBtn) installBtn.style.display = "inline-block";
 });
 
-// Klik op knop start installatieprompt
+// Klik op knop
 if (installBtn) {
   installBtn.addEventListener("click", async () => {
-    if (!deferredPrompt) return;
-    installBtn.disabled = true;
-    deferredPrompt.prompt();
-    const { outcome } = await deferredPrompt.userChoice;
-    deferredPrompt = null;
-    if (outcome === "accepted") {
-      installBtn.textContent = "Geïnstalleerd";
-      installBtn.style.display = "none";
-    } else {
-      installBtn.disabled = false;
+    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+    // Chrome, Edge, Android
+    if (deferredPrompt) {
+      installBtn.disabled = true;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      if (outcome === "accepted") {
+        installBtn.textContent = "Geïnstalleerd";
+        installBtn.style.display = "none";
+      } else {
+        installBtn.disabled = false;
+      }
+      return;
     }
+
+    // iOS Safari heeft geen beforeinstallprompt
+    if (isIOS && isSafari) {
+      alert("Open de deelknop, kies \"Zet op beginscherm\", bevestig de naam.");
+      return;
+    }
+
+    alert("Installeren wordt niet ondersteund in deze browser. Probeer Chrome of Edge.");
   });
 }
 
-// Verberg knop na succesvolle installatie
+// Na installatie: knop verbergen
 window.addEventListener("appinstalled", () => {
   deferredPrompt = null;
   if (installBtn) installBtn.style.display = "none";
