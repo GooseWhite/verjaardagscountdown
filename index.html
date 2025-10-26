@@ -10,20 +10,26 @@
   <meta name="theme-color" content="#ff6f61" />
   <link rel="apple-touch-icon" href="./icons/icon-192.png" />
 
-  <!-- CSS -->
+  <!-- Styles -->
   <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
   <div class="container">
     <h1>Verjaardag Countdown 🎉</h1>
+
     <div id="countdown">
       <span id="days">0</span> dagen
     </div>
+
     <p id="message"></p>
+
+    <!-- Installatieknop voor PWA -->
+    <button id="installBtn" style="display:none;">
+      App installeren
+    </button>
   </div>
 
-  <!-- JS -->
+  <!-- Scripts -->
   <script src="./script.js"></script>
-  <!-- geen inline service worker registratie hier -->
 </body>
 </html>
