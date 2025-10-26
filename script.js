@@ -38,9 +38,44 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(updateCountdown, 1000);
 });
 
-// Service Worker alleen hier registreren
+// === PWA installatieknop ===
+let deferredPrompt = null;
+const installBtn = document.getElementById("installBtn");
+
+// Toon knop wanneer installeren kan
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (installBtn) installBtn.style.display = "inline-block";
+});
+
+// Klik op knop start installatieprompt
+if (installBtn) {
+  installBtn.addEventListener("click", async () => {
+    if (!deferredPrompt) return;
+    installBtn.disabled = true;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    if (outcome === "accepted") {
+      installBtn.textContent = "Geïnstalleerd";
+      installBtn.style.display = "none";
+    } else {
+      installBtn.disabled = false;
+    }
+  });
+}
+
+// Verberg knop na succesvolle installatie
+window.addEventListener("appinstalled", () => {
+  deferredPrompt = null;
+  if (installBtn) installBtn.style.display = "none";
+});
+
+// === Service Worker registratie ===
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker.register("./sw.js")
     .then(() => console.log("Service Worker geregistreerd"))
     .catch(err => console.log("Service Worker fout", err));
 }
+
