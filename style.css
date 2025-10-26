@@ -1,4 +1,4 @@
-/* Basis */
+/* Basis *//* Algemene page styling */
 body {
   font-family: Arial, sans-serif;
   background: #ffebcc;
@@ -18,20 +18,47 @@ body {
   color: #fff;
   max-width: 480px;
   width: calc(100% - 32px);
+  text-align: center;
 }
 
-/* Typografie */
+/* Titel en tekst */
 h1 {
-  font-size: 2.5em;
-  margin-bottom: 20px;
+  font-size: 2.4rem;
+  margin-bottom: 12px;
 }
 
 #countdown {
-  font-size: 2em;
-  margin-bottom: 20px;
+  font-size: 2rem;
+  margin-bottom: 12px;
 }
 
 #message {
-  font-size: 1.5em;
+  margin-top: 8px;
+  font-size: 1.3rem;
   font-weight: bold;
 }
+
+/* Installatieknop styling */
+.install-btn {
+  margin-top: 16px;
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #ff6f61;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.install-btn:hover {
+  background: #ffe1dd;
+}
+
+.install-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
